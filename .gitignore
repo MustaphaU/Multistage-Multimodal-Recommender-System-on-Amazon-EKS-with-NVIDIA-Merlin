@@ -14,7 +14,6 @@ initial_data_real/*
 initial_data.zip
 lambda/raw_and_mappings/*
 lambda/raw_and_mappings.zip
-.gitignore
 Docs/deployment_instructions.md
 # demo_app.py
 incremental_recsys_pipeline.yaml
