@@ -106,11 +106,12 @@ class TritonPythonModel:
             gender = feast_dict["gender"][i]
             top_cat = feast_dict["top_category"][i]
             if age is None or gender is None:
-                # Cold-start user: use OOV defaults
+                # Cold-start user: OOV defaults for profile features, but preserve
+                # any top_category written by the behavioral feature_computation lambda.
                 out_user_ids.append(OOV_SENTINEL)
                 out_ages.append(self.default_age)
                 out_genders.append(OOV_SENTINEL)
-                out_top_cats.append(OOV_SENTINEL)
+                out_top_cats.append(top_cat if top_cat is not None else OOV_SENTINEL)
             else:
                 out_user_ids.append(uid)
                 out_ages.append(age)
