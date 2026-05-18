@@ -9,7 +9,7 @@ Writes to:    Feast online store (Redis) via write_to_online_store.
 
 SQS message format:
     {"user_id": int}                     # recompute top_category from sorted set
-    {"user_id": int, "flush": true}      # reset top_category to OOV on flush
+    {"user_id": int, "flush": true}    # clear Bloom filter and sorted set, but retain existing top_category until it ages out
 
 Environment variables:
     REDIS_HOST         — ElastiCache hostname, e.g. master.xxx.cache.amazonaws.com
