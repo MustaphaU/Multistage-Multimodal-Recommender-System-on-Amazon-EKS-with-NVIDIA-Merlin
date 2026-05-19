@@ -6,15 +6,15 @@ A production-grade multistage recommender system deployed on Kubernetes, combini
 ![Model serving architecture](static/Model_serving.png)
 ---
 
-## Architecture
+## MLOps Architecture
 
-**MLOps architecture**
 ![MLOps architecture](static/MLOps_arch_updated.png)
 ---
 
-## Medium article
+## Publications
+1. Towards Data Science
 
-[Deploying a Four-stage Recommender System on Kubernetes featuring Multimodal Embeddings, Cold Start handling, Bloom Filters, and Feature Caching](https://mustaphaunubi.medium.com/building-a-production-multistage-recommender-system-on-kubernetes-featuring-multimodal-embeddings-5bcd6d7bbf56?postPublishedType=repub)
+[Deploying a Multistage Multimodal Recommender System on Amazon EKS featuring Bloom Filters, Feature Caching, and Contextual Recommendations](https://towardsdatascience.com/deploying-a-multistage-multimodal-recommender-system-on-amazon-eks-featuring-bloom-filters-feature-caching-and-contextual-recommendations)
 
 ---
 ## Video Demo
@@ -24,7 +24,7 @@ Click to watch the Demo
 
 A user request triggers a 14-stage ensemble served by NVIDIA Triton Inference Server on EKS:
 
-![Illustration of Client Request processing](static/TritonProcessingRequests.png)
+<!-- ![Illustration of Client Request processing](static/TritonProcessingRequests.png) -->
 
 1. **Feast user lookup** — fetches user features (age, gender, `top_category`) from a Redis online store
 2. **NVT transforms** — applies the same NVTabular preprocessing workflow used during training to user, item, and context features
@@ -66,3 +66,18 @@ A user request triggers a 14-stage ensemble served by NVIDIA Triton Inference Se
 ## Deployment
 
 Full deployment instructions: [Docs/documentation.md](Docs/documentation.md)
+
+---
+
+## Citation
+
+```bibtex
+@article{momoh2026multistage,
+  title={Deploying a Multistage Multimodal Recommender System on Amazon Elastic Kubernetes Service},
+  author={Momoh, Mustapha Unubi},
+  journal={Towards Data Science},
+  year={2026},
+  month={May},
+  url={https://towardsdatascience.com/deploying-a-multistage-multimodal-recommender-system-on-amazon-eks-featuring-bloom-filters-feature-caching-and-contextual-recommendations}
+}
+```
