@@ -2,6 +2,8 @@
 
 A production-grade multistage recommender system deployed on Kubernetes, combining two-tower retrieval, DLRM ranking, multimodal item embeddings, and a real-time behavioral personalization loop.  
 
+**NOTE:** In this branch, both retrieval and ranking are context-aware
+
 **Model serving pipeline**
 ![Model serving architecture](static/Model_serving.png)
 ---
