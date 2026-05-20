@@ -173,6 +173,26 @@ ensemble_scheduling {
       key: "top_category"
       value: "nvt_top_category"
     }
+    input_map {
+      key: "device_type"
+      value: "nvt_device_type"
+    }
+    input_map {
+      key: "hour_sine"
+      value: "nvt_hour_sine"
+    }
+    input_map {
+      key: "hour_cosine"
+      value: "nvt_hour_cosine"
+    }
+    input_map {
+      key: "day_of_week_sine"
+      value: "nvt_day_of_week_sine"
+    }
+    input_map {
+      key: "day_of_week_cosine"
+      value: "nvt_day_of_week_cosine"
+    }
     output_map {
       key: "output_1"
       value: "qt_output_1"

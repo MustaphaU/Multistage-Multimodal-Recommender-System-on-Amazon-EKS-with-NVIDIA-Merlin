@@ -26,6 +26,31 @@ input {
   data_type: TYPE_INT32
   dims: [ -1 ]
 }
+input {
+  name: "device_type"
+  data_type: TYPE_INT32
+  dims: [ -1 ]
+}
+input {
+  name: "hour_sine"
+  data_type: TYPE_FP32
+  dims: [ -1 ]
+}
+input {
+  name: "hour_cosine"
+  data_type: TYPE_FP32
+  dims: [ -1 ]
+}
+input {
+  name: "day_of_week_sine"
+  data_type: TYPE_FP32
+  dims: [ -1 ]
+}
+input {
+  name: "day_of_week_cosine"
+  data_type: TYPE_FP32
+  dims: [ -1 ]
+}
 output {
   name: "output_1"
   data_type: TYPE_FP32

@@ -28,7 +28,10 @@ class DenseContinuousProjection(tf.keras.layers.Layer):
 
 
 def build_two_tower_model(loader_schema):
-    query_schema = loader_schema.select_by_tag([Tags.USER])
+    context_columns = ["device_type", "hour_sine", "hour_cosine", "day_of_week_sine", "day_of_week_cosine"] 
+    query_schema = (loader_schema.select_by_tag([Tags.USER])
+                    + loader_schema.select_by_name(context_columns)
+                    )
     candidate_schema = loader_schema.select_by_tag([Tags.ITEM])
 
     query_cont_branch = DenseContinuousProjection(
@@ -90,7 +93,11 @@ def finetune_query_tower(input_path, embeddings_path, checkpoint_path, output_pa
     image_embeddings = np.load(os.path.join(embeddings_path, "lookup_embeddings_image.npy"))
     description_embeddings = np.load(os.path.join(embeddings_path, "lookup_embeddings_text.npy"))
 
-    schema = train_data.schema.select_by_tag([Tags.USER, Tags.ITEM])
+    context_columns = ["device_type", "hour_sine", "hour_cosine", "day_of_week_sine", "day_of_week_cosine"]
+    schema = (
+        train_data.schema.select_by_tag([Tags.USER, Tags.ITEM])
+        + train_data.schema.select_by_name(context_columns)
+    )
     train_data.schema = schema
     valid_data.schema = schema
 

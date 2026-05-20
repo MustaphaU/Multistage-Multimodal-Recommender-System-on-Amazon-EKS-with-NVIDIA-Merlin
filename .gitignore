@@ -22,3 +22,5 @@ multistage_recsys_pipeline.yaml
 ignore_session_based_sample
 personalization-apis
 client_app.py
+context-aware-retrieval.ipynb
+context-aware

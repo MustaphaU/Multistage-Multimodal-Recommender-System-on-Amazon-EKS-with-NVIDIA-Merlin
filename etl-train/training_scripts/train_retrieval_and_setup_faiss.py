@@ -190,7 +190,12 @@ def train_twotower_and_setup_faiss(input_path, output_path):
     image_embeddings = np.load(os.path.join(input_path, "lookup_embeddings", "lookup_embeddings_image.npy"))
     description_embeddings = np.load(os.path.join(input_path, "lookup_embeddings", "lookup_embeddings_text.npy"))
 
-    schema = train_data.schema.select_by_tag([Tags.USER, Tags.ITEM])
+    context_columns = ["device_type", "hour_sine", "hour_cosine", "day_of_week_sine", "day_of_week_cosine"]
+
+    schema = (
+        train_data.schema.select_by_tag([Tags.USER, Tags.ITEM])
+        + train_data.schema.select_by_name(context_columns)
+    )
     train_data.schema = schema
     valid_data.schema = schema
 
@@ -212,7 +217,11 @@ def train_twotower_and_setup_faiss(input_path, output_path):
     )
 
     loader_schema = train_loader.output_schema
-    query_schema = loader_schema.select_by_tag([Tags.USER])
+    query_schema = (
+        loader_schema.select_by_tag([Tags.USER])
+        + loader_schema.select_by_name(context_columns)
+    )
+    # query_schema = loader_schema.select_by_tag([Tags.USER])
     candidate_schema = loader_schema.select_by_tag([Tags.ITEM])
 
     #build the model

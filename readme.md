@@ -81,3 +81,10 @@ Full deployment instructions: [Docs/documentation.md](Docs/documentation.md)
   url={https://towardsdatascience.com/deploying-a-multistage-multimodal-recommender-system-on-amazon-eks-featuring-bloom-filters-feature-caching-and-contextual-recommendations}
 }
 ```
+
+## Resources
+- Ziyou "Eugene" Yan, [*System Design for Recommendations and Search*](https://eugeneyan.com/writing/system-design-for-discovery/), eugeneyan.com, Jun. 2021.
+- Benedikt Schifferer, [*Solving the Cold-Start Problem Using Two-Tower Neural Networks for NVIDIA's E-Mail Recommender Systems*](https://medium.com/nvidia-merlin/solving-the-cold-start-problem-using-two-tower-neural-networks-for-nvidias-e-mail-recommender-2d5b30a071a4), NVIDIA Merlin (Medium), Jan. 2023.
+- Justin Wortz, Justin Totten, [*Scaling Deep Retrieval with TensorFlow Recommenders and Vertex AI Matching Engine*](https://cloud.google.com/blog/products/ai-machine-learning/scaling-deep-retrieval-tensorflow-two-towers-architecture), Google Cloud Blog, Apr. 19, 2023.
+- Sam Partee, Tyler Hutcherson, Nathan Stephens, [*Offline to Online: Feature Storage for Real-time Recommendation Systems with NVIDIA Merlin*](https://developer.nvidia.com/blog/offline-to-online-feature-storage-for-real-time-recommendation-systems-with-nvidia-merlin/), NVIDIA Technical Blog, Mar. 1, 2023.
+- Jacopo Tagliabue, Hugo Bowne-Anderson, Ronay Ak, Gabriel de Souza Moreira, Sara Rabhi, [*NVIDIA Merlin Meets the MLOps Ecosystem: Building a Production-Ready RecSys Pipeline on Cloud*](https://medium.com/nvidia-merlin/nvidia-merlin-meets-the-mlops-ecosystem-building-a-production-ready-recsys-pipeline-on-cloud-1a16c156166b), NVIDIA Merlin (Medium), Feb. 2023.
