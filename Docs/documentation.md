@@ -1,5 +1,5 @@
 # Deploying a Multistage Recommender System on Amazon EKS
-There are three major parts. 
+There are four major parts. 
 1. [EKS and other infrastructure deployment](#1-eks-and-other-infrastructure-deployment)
 2. [Full Training Pipeline setup](#2-full-training-pipeline-setup)
 3. [Incremental Training Pipeline Setup](#3-incremental-training-pipeline-setup)
@@ -1091,10 +1091,10 @@ python3 kubeflowpipeline_2.py \
 
 
 ## 4. Setup the client and run
-a. First visit [this readme](../lambda/readme.md) for instructions on setting up the client.
+a. First visit [this readme](../lambda/readme.md) for instructions on setting up DynamoDB and the lambda functions.
 
 
-b. Generate the item catalog from DynamoDB (required by the demo app; `catalog.json` is gitignored)
+b. Generate the item catalog from DynamoDB (`catalog.json`)
 ```bash
 python3 - <<'EOF'
 import boto3, json
