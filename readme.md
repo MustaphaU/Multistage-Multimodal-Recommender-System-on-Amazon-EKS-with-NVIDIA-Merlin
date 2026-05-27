@@ -75,7 +75,7 @@ Full deployment instructions: [Docs/documentation.md](Docs/documentation.md)
 @article{momoh2026multistage,
   title={Deploying a Multistage Multimodal Recommender System on Amazon Elastic Kubernetes Service},
   author={Momoh, Mustapha Unubi},
-  journal={Towards Data Science},
+  platform={Towards Data Science},
   year={2026},
   month={May},
   url={https://towardsdatascience.com/deploying-a-multistage-multimodal-recommender-system-on-amazon-eks-featuring-bloom-filters-feature-caching-and-contextual-recommendations}
