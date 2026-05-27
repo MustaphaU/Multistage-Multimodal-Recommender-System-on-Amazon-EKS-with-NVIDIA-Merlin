@@ -8,7 +8,7 @@ This documentation presents how to set up the DynamoDB table for enriching recom
 [GOOGLE DRIVE LINK](https://drive.google.com/file/d/1J5caMIMkDIq5pAI1LeMu6KgE8PLJS0gs/view?usp=sharing)
 * Unzip and Place the unzipped folder here.
 
-## 1. Setting the dynamoDB table for item metadata lookup
+## 2. Setting up the dynamoDB table for item metadata lookup
 * Make the script executable
 ```bash
 chmod +x set_up_dynamodb.sh
