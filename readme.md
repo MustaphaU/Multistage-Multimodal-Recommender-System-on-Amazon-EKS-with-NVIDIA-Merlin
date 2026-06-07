@@ -8,18 +8,18 @@ A production-grade multistage recommender system deployed on Kubernetes, combini
 ![Model serving architecture](static/Model_serving.png)
 ---
 
-## MLOps Architecture
+## **MLOps Infra**
 
 ![MLOps architecture](static/MLOps_arch_updated.png)
 ---
 
-## Publications
-1. Towards Data Science
+## **Publications**
+1. Towards Data Science: [Deploying a Multistage Multimodal Recommender System on Amazon EKS featuring Bloom Filters, Feature Caching, and Contextual Recommendations](https://towardsdatascience.com/deploying-a-multistage-multimodal-recommender-system-on-amazon-eks-featuring-bloom-filters-feature-caching-and-contextual-recommendations)
 
-[Deploying a Multistage Multimodal Recommender System on Amazon EKS featuring Bloom Filters, Feature Caching, and Contextual Recommendations](https://towardsdatascience.com/deploying-a-multistage-multimodal-recommender-system-on-amazon-eks-featuring-bloom-filters-feature-caching-and-contextual-recommendations)
+2. Medium article: [Deploying a Multistage Multimodal Recommender System on Amazon EKS featuring Bloom Filters, Feature Caching, and Contextual Recommendations](https://mustaphaunubi.medium.com/building-a-production-multistage-recommender-system-on-kubernetes-featuring-multimodal-embeddings-5bcd6d7bbf56)
 
 ---
-## Video Demo
+## **Video Demo**
 Click to watch the Demo
 [![Video Demo](static/github_thumbnail.png)](https://youtu.be/nNC8G7wBpBA)
 ## How it works
@@ -28,10 +28,10 @@ A user request triggers a 14-stage ensemble served by NVIDIA Triton Inference Se
 
 <!-- ![Illustration of Client Request processing](static/TritonProcessingRequests.png) -->
 
-1. **Feast user lookup** — fetches user features (age, gender, `top_category`) from a Redis online store
+1. **Feast user lookup** — fetches user features (age, gender, `top_category`) from a Valkey-backed Feast online store
 2. **NVT transforms** — applies the same NVTabular preprocessing workflow used during training to user, item, and context features
 3. **Two-Tower retrieval** — encodes the user query and searches a FAISS index of item embeddings to retrieve the top-N candidates
-4. **Bloom filter** — removes items the user has already seen using a Redis/Valkey Bloom filter
+4. **Bloom filter** — removes items the user has already seen using a Valkey Bloom filter
 5. **Feast item lookup** — resolves item features (category, price, gender) from a numpy in-memory cache loaded at startup (~0.5ms vs ~195ms for a live Feast round trip)
 6. **Multimodal embedding lookup** — attaches CLIP image and sentence-transformer text embeddings (PCA-reduced to 64-dim each) to each candidate
 7. **DLRM ranking** — scores the filtered candidates; a reranker reranks and samples from the scored candidates and  results are returned to the caller enriched with DynamoDB item metadata
@@ -43,8 +43,8 @@ A user request triggers a 14-stage ensemble served by NVIDIA Triton Inference Se
 `top_category` — the user's dominant item category over the past 24 hours — is updated in near real-time without retraining:
 
 
-- When a user interacts with an item, the serving Lambda adds it to a Redis sorted set (`user:{id}:recent_items`) and enqueues an SQS message
-- The `recsys-feature-computation` Lambda triggers on that message, recomputes `top_category` from the sorted set, and writes it to both the **Feast online store** (Redis) for immediate serving and the **S3 offline store** (Parquet) for the next incremental training run
+- When a user interacts with an item, the serving Lambda adds it to a Valkey sorted set (`user:{id}:recent_items`) and enqueues an SQS message
+- The `recsys-feature-computation` Lambda triggers on that message, recomputes `top_category` from the sorted set, and writes it to both the **Feast online store** (Valkey) for immediate serving and the **S3 offline store** (Parquet) for the next incremental training run
 - The incremental training pipeline reads the S3 offline store to override stale Feast historical features, eliminating training/serving skew for `top_category`
 
 ---
@@ -55,8 +55,8 @@ A user request triggers a 14-stage ensemble served by NVIDIA Triton Inference Se
 |---|---|
 | Model serving | NVIDIA Triton Inference Server |
 | Orchestration | Amazon EKS, Karpenter, Kubernetes HPA |
-| Feature store | Feast (Redis online store, S3 offline store) |
-| Behavioral cache | Amazon ElastiCache (Redis/Valkey) |
+| Feature store | Feast (Valkey online store, S3 offline store) |
+| Behavioral cache | Amazon ElastiCache for Valkey |
 | Item metadata | Amazon DynamoDB |
 | Serving Lambda | AWS Lambda + Function URL |
 | Real-time features | AWS SQS → Lambda → Feast + S3 |

@@ -35,7 +35,7 @@ aws dynamodb get-item --table-name $ITEMS_TABLE_NAME --region $REGION \
 ```
 
 ## 2. Setting up the `recsys-recommend` Lambda function
-This function is responsible for fetching recommendations, updating the Bloom filter, and enqueueing messages to the SQS queue to trigger online feature computation. Because the Triton Inference Service is exposed through an internal AWS Network Load Balancer (NLB), the Lambda function is deployed into the same VPC same VPC as ElastiCache and the EKS node subnets hosting Triton, so it can privately reach Redis and the Triton service.
+This function is responsible for fetching recommendations, updating the Bloom filter, and enqueueing messages to the SQS queue to trigger online feature computation. Because the Triton Inference Service is exposed through an internal AWS Network Load Balancer (NLB), the Lambda function is deployed into the same VPC as ElastiCache and the EKS node subnets hosting Triton, so it can privately reach Valkey and the Triton service.
 
 * Build and push the container image to ECR
 ```bash
@@ -62,7 +62,7 @@ SUBNETS=$(aws elasticache describe-cache-subnet-groups \
 
 echo "$SUBNETS"
 ```
-* Fetch the ElastiCache primary endpoint (for REDIS_HOST)
+* Fetch the ElastiCache primary endpoint (for `REDIS_HOST`; variable name retained for compatibility)
 ```bash
 REDIS_HOST=$(aws elasticache describe-replication-groups \
   --query 'ReplicationGroups[0].NodeGroups[0].PrimaryEndpoint.Address' \
@@ -286,7 +286,7 @@ aws iam put-role-policy --role-name recsys-feature-lambda-role \
   }'
 ```
 
-* Create the function (same VPC as ElastiCache so it can reach Redis/Valkey)
+* Create the function (same VPC as ElastiCache so it can reach Valkey)
 ```bash
 aws lambda create-function \
   --function-name recsys-feature-computation \
