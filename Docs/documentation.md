@@ -851,39 +851,7 @@ aws glue get-tables --database-name $GLUE_DATABASE --region $AWS_DEFAULT_REGION 
 aws athena get-work-group --work-group $ATHENA_WORKGROUP --region $AWS_DEFAULT_REGION \
     --query 'WorkGroup.Configuration.ResultConfiguration.OutputLocation' --output text
 ```
-**Note:** `feast apply`, `feast materialize`, and `seed_trending` are NOT run here; they are executed automatically by `preprocess.sh` during the ETL pipeline run.
-
-f. **Adding new columns to an existing feature view**
-
-When a new column is added to a Feast feature view (e.g. adding `top_category` to `user_features`), `feast apply` updates the Feast registry but does **not** update the underlying Glue table DDL. `feast materialize` will then fail with `COLUMN_NOT_FOUND` when Athena queries the stale schema.
-
-Run the ALTER TABLE command via Athena before re-running materialize:
-
-```bash
-# General pattern — replace TABLE_NAME, COLUMN_NAME, and COLUMN_TYPE as needed
-aws athena start-query-execution \
-  --query-string "ALTER TABLE <TABLE_NAME> ADD COLUMNS (<COLUMN_NAME> <COLUMN_TYPE>)" \
-  --query-execution-context Database=$GLUE_DATABASE \
-  --work-group $ATHENA_WORKGROUP \
-  --region $AWS_DEFAULT_REGION
-```
-
-Example: adding `top_category int` to `user_features`:
-```bash
-aws athena start-query-execution \
-  --query-string "ALTER TABLE user_features ADD COLUMNS (top_category int)" \
-  --query-execution-context Database=$GLUE_DATABASE \
-  --work-group $ATHENA_WORKGROUP \
-  --region $AWS_DEFAULT_REGION
-```
-
-Wait a few seconds, then verify the column appears:
-```bash
-aws glue get-table --database-name $GLUE_DATABASE --name user_features \
-  --query 'Table.StorageDescriptor.Columns[].Name' --output text
-```
-
-After the schema is updated, re-run `feast materialize` (or re-trigger the pipeline). Note: the Glue table definition in step 13c above already includes all current columns for fresh deployments.
+**Note:** `feast apply`, `feast materialize` are NOT run here; they are executed automatically by `preprocess.sh` during the ETL pipeline run.
 
 ### 14 Create the policy for S3, Athena, and Glue access
 ```bash
