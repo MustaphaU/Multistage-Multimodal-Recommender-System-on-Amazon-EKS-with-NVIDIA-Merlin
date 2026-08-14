@@ -3,7 +3,7 @@ There are four major parts.
 1. [EKS and other infrastructure deployment](#1-eks-and-other-infrastructure-deployment)
 2. [Full Training Pipeline setup](#2-full-training-pipeline-setup)
 3. [Incremental Training Pipeline Setup](#3-incremental-training-pipeline-setup)
-4. [Client setup](#4-client-setup)
+4. [Client setup](#4-setup-the-client-and-run)
 
 ## 1. EKS and other infrastructure deployment
 
